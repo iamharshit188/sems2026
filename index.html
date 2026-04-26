@@ -9,15 +9,13 @@
   --bg:#FFFBF0;--black:#0A0A0A;--white:#FFFFFE;--gray:#F0ECE0;--gray2:#E4E0D0;
   --b:3px solid #0A0A0A;--sh:5px 5px 0 #0A0A0A;--sh-sm:3px 3px 0 #0A0A0A;
   --iot:#0FBFAA;--daa:#F0C000;--cd:#F97316;--cl:#E8306A;--im:#6EC200;
-  --cia:#DC2626;
+  --cia:#DC2626; --yt:#FF0000;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;min-height:100vh;}
 :focus-visible{outline:3px solid var(--black);outline-offset:3px;border-radius:2px;}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
-.skip-link{position:absolute;left:-999px;background:var(--black);color:var(--white);padding:.5rem 1rem;font-weight:800;z-index:9999;text-decoration:none;}
-.skip-link:focus{left:0;top:0;}
 
 /* HEADER */
 .hdr{background:var(--black);color:var(--white);padding:1rem 1.5rem;position:sticky;top:0;z-index:200;border-bottom:var(--b);}
@@ -34,8 +32,16 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
 .btn-reset:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.4);}
 .btn-reset:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(0,0,0,.4);}
 
-/* CONTENT */
-.wrap{max-width:1240px;margin:0 auto;padding:1.75rem 1.5rem 4rem;}
+/* TAB NAVIGATION (DASHBOARD) */
+.wrap{max-width:1240px;margin:0 auto;padding:1.5rem 1.5rem 4rem;}
+.tabs-nav{display:flex;gap:.75rem;margin-bottom:2rem;border-bottom:3px solid var(--black);padding-bottom:.8rem;overflow-x:auto;}
+.tab-btn{background:var(--white);color:var(--black);border:var(--b);border-bottom:4px solid var(--black);padding:.6rem 1.2rem;font-size:.85rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;border-radius:3px;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{background:var(--gray);}
+.tab-btn.active{background:var(--daa);transform:translateY(3px);border-bottom-width:1px;}
+.tab-panel{display:none; animation: fadeIn 0.3s ease;}
+.tab-panel.active{display:block;}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
 .sec-title{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;border-bottom:3px solid var(--black);padding-bottom:.45rem;margin-bottom:1.4rem;}
 
 /* CIA ALERT */
@@ -87,19 +93,25 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
 @media(max-width:680px){.body-grid{grid-template-columns:1fr;}.subj-badge{display:none;}}
 .col-title{font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-bottom:2.5px solid var(--black);padding-bottom:.4rem;margin-bottom:.9rem;}
 
-/* CHECKLIST */
-.topic-item{display:flex;align-items:flex-start;gap:.55rem;padding:.45rem .5rem;border:2px solid transparent;border-radius:2px;margin-bottom:.35rem;transition:border-color .1s,background .1s;}
+/* CHECKLIST & VIDEO LINKS */
+.topic-item{display:flex;align-items:flex-start;gap:.55rem;padding:.55rem .5rem;border:2px solid transparent;border-radius:2px;margin-bottom:.35rem;transition:border-color .1s,background .1s;}
 .topic-item:hover{border-color:var(--black);background:var(--gray);}
 .topic-item.done label{text-decoration:line-through;opacity:.45;}
 .topic-item input[type=checkbox]{width:17px;height:17px;border:2px solid var(--black);border-radius:2px;cursor:pointer;flex-shrink:0;margin-top:2px;accent-color:var(--black);}
-.topic-item label{font-size:.83rem;line-height:1.45;cursor:pointer;flex:1;}
+.topic-content{flex:1; display:flex; flex-direction:column; gap:6px;}
+.topic-item label{font-size:.83rem;line-height:1.45;cursor:pointer;}
 .ptag{font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border:1.5px solid;border-radius:2px;flex-shrink:0;margin-top:3px;white-space:nowrap;}
 .ptag.must{background:#FEE2E2;border-color:#DC2626;color:#991B1B;}
 .ptag.imp{background:#FFF7ED;border-color:#F97316;color:#9A3412;}
 .ptag.rev{background:#F0FDF4;border-color:#16A34A;color:#14532D;}
 
+.btn-yt{display:inline-flex;align-items:center;gap:4px;background:var(--yt);color:var(--white);border:2px solid var(--black);padding:2px 8px;font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;cursor:pointer;width:max-content;box-shadow:2px 2px 0 var(--black);transition:transform .1s,box-shadow .1s;}
+.btn-yt:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--black);}
+.btn-yt:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--black);}
+.btn-yt svg{width:12px;height:12px;fill:currentColor;}
+
 /* FAQ */
-.faq-item{border:2.5px solid var(--black);border-radius:2px;padding:.6rem .75rem .6rem .75rem;margin-bottom:.55rem;box-shadow:var(--sh-sm);font-size:.83rem;line-height:1.5;position:relative;}
+.faq-item{border:2.5px solid var(--black);border-radius:2px;padding:.6rem .75rem;margin-bottom:.55rem;box-shadow:var(--sh-sm);font-size:.83rem;line-height:1.5;position:relative;}
 .fq-tag{display:inline-block;font-size:.58rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-bottom:.35rem;}
 .fq-tag.every{background:var(--cia);color:var(--white);}
 .fq-tag.many{background:var(--cd);color:var(--white);}
@@ -120,6 +132,16 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
 .tag-cl{background:var(--cl);color:var(--white);}
 .tag-im{background:var(--im);color:var(--black);}
 
+/* VIDEO MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.modal-overlay.active{display:flex; animation:fadeIn .2s ease;}
+.modal-content{background:var(--bg);border:3px solid var(--black);box-shadow:8px 8px 0 var(--black);width:100%;max-width:800px;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+.modal-header{background:var(--black);color:var(--white);padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;}
+.modal-title{font-size:.85rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:1rem;}
+.btn-close{background:var(--cia);color:var(--white);border:2px solid rgba(255,255,255,.4);padding:.2rem .8rem;font-weight:900;cursor:pointer;border-radius:2px;}
+.video-container{position:relative;padding-bottom:56.25%;height:0;background:#000;}
+.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
 /* FOOTER */
 .ftr{max-width:1240px;margin:0 auto;padding:.75rem 1.5rem;border-top:3px solid var(--black);font-size:.75rem;opacity:.5;text-align:center;}
 
@@ -132,12 +154,12 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
   .exam-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
   .subj-hdr{flex-direction:column;align-items:flex-start;}
   .subj-hdr-r{width:100%;justify-content:flex-end;}
+  .tabs-nav{padding-bottom:.5rem;}
+  .tab-btn{padding:.5rem .8rem;font-size:.75rem;}
 }
 </style>
 </head>
 <body>
-
-<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- HEADER -->
 <header class="hdr" role="banner">
@@ -159,68 +181,95 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
   </div>
 </header>
 
-<main id="main" class="wrap">
+<main class="wrap">
+  
+  <!-- TAB NAVIGATION -->
+  <nav class="tabs-nav" role="tablist" aria-label="Dashboard Views">
+    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-dash" id="tab-dash">⏲️ Dashboard</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-subj" id="tab-subj">📚 Subjects &amp; Videos</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-plan" id="tab-plan">📅 Study Planner</button>
+  </nav>
 
-  <!-- CIA SECTION -->
-  <section aria-labelledby="cia-hd">
-    <div class="cia-box">
-      <p class="cia-hd" id="cia-hd" role="heading" aria-level="2">CIA Examinations — Continuous Internal Assessment</p>
-      <div class="cia-grid">
-        <div class="cia-card">
-          <p class="cia-card-dt">Monday, 27 April 2026</p>
-          <p class="cia-card-subj">Industrial Mgmt + DAA</p>
-          <p class="cia-card-time">NHS4601: 10:00–11:00 AM &nbsp;|&nbsp; NCS4602: 11:00–12:00 PM</p>
-          <p class="cia-cd" id="cia1" aria-live="polite" aria-atomic="true" aria-label="Countdown to CIA on 27 April">Loading...</p>
-        </div>
-        <div class="cia-card">
-          <p class="cia-card-dt">Tuesday, 28 April 2026</p>
-          <p class="cia-card-subj">Compiler Design + Cyber Law</p>
-          <p class="cia-card-time">NCS4604: 10:00–11:00 AM &nbsp;|&nbsp; NPEC43213: 11:00–12:00 PM</p>
-          <p class="cia-cd" id="cia2" aria-live="polite" aria-atomic="true">Loading...</p>
-        </div>
-        <div class="cia-card">
-          <p class="cia-card-dt">Wednesday, 29 April 2026</p>
-          <p class="cia-card-subj">Internet of Things</p>
-          <p class="cia-card-time">NPEC43224: 10:00–11:00 AM</p>
-          <p class="cia-cd" id="cia3" aria-live="polite" aria-atomic="true">Loading...</p>
+  <!-- PANEL 1: DASHBOARD (COUNTDOWNS) -->
+  <div id="panel-dash" class="tab-panel active" role="tabpanel" aria-labelledby="tab-dash">
+    <!-- CIA SECTION -->
+    <section aria-labelledby="cia-hd">
+      <div class="cia-box">
+        <p class="cia-hd" id="cia-hd" role="heading" aria-level="2">CIA Examinations — Continuous Internal Assessment</p>
+        <div class="cia-grid">
+          <div class="cia-card">
+            <p class="cia-card-dt">Monday, 27 April 2026</p>
+            <p class="cia-card-subj">Industrial Mgmt + DAA</p>
+            <p class="cia-card-time">NHS4601: 10:00–11:00 AM &nbsp;|&nbsp; NCS4602: 11:00–12:00 PM</p>
+            <p class="cia-cd" id="cia1" aria-live="polite" aria-atomic="true">Loading...</p>
+          </div>
+          <div class="cia-card">
+            <p class="cia-card-dt">Tuesday, 28 April 2026</p>
+            <p class="cia-card-subj">Compiler Design + Cyber Law</p>
+            <p class="cia-card-time">NCS4604: 10:00–11:00 AM &nbsp;|&nbsp; NPEC43213: 11:00–12:00 PM</p>
+            <p class="cia-cd" id="cia2" aria-live="polite" aria-atomic="true">Loading...</p>
+          </div>
+          <div class="cia-card">
+            <p class="cia-card-dt">Wednesday, 29 April 2026</p>
+            <p class="cia-card-subj">Internet of Things</p>
+            <p class="cia-card-time">NPEC43224: 10:00–11:00 AM</p>
+            <p class="cia-cd" id="cia3" aria-live="polite" aria-atomic="true">Loading...</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MAIN EXAM TIMERS -->
-  <section aria-labelledby="main-hd">
-    <h2 class="sec-title" id="main-hd">Main Examinations — Countdown</h2>
-    <div class="exam-grid" id="examGrid" role="list"></div>
-  </section>
+    <!-- MAIN EXAM TIMERS -->
+    <section aria-labelledby="main-hd">
+      <h2 class="sec-title" id="main-hd">Main Examinations — Countdown</h2>
+      <div class="exam-grid" id="examGrid" role="list"></div>
+    </section>
+  </div>
 
-  <!-- SUBJECT ACCORDIONS -->
-  <section aria-labelledby="subj-hd">
-    <h2 class="sec-title" id="subj-hd">Subject Preparation — Topics Checklist &amp; PYQ Analysis</h2>
-    <p style="font-size:.8rem;opacity:.65;margin-bottom:1.2rem;">Click any subject card to expand. Check topics as you study — progress is saved automatically in your browser.</p>
-    <div class="subj-cards" id="subjCards"></div>
-  </section>
+  <!-- PANEL 2: SUBJECTS & VIDEOS -->
+  <div id="panel-subj" class="tab-panel" role="tabpanel" aria-labelledby="tab-subj">
+    <section aria-labelledby="subj-hd">
+      <h2 class="sec-title" id="subj-hd">Subject Preparation — Topics, Video Lectures &amp; PYQs</h2>
+      <p style="font-size:.8rem;opacity:.65;margin-bottom:1.2rem;">Click any subject card to expand. Check topics as you study — progress is saved automatically. DAA includes video lectures mapped to topics.</p>
+      <div class="subj-cards" id="subjCards"></div>
+    </section>
+  </div>
 
-  <!-- DAILY PLANNER -->
-  <section aria-labelledby="plan-hd">
-    <h2 class="sec-title" id="plan-hd">Day-by-Day Study Planner</h2>
-    <div class="plan-wrap">
-      <table class="plan-tbl" aria-label="Day-by-day study schedule from 27 April to 1 June 2026">
-        <thead>
-          <tr>
-            <th scope="col" style="width:11%">Date</th>
-            <th scope="col" style="width:6%">Day</th>
-            <th scope="col" style="width:29%">Primary Focus</th>
-            <th scope="col" style="width:27%">Secondary Focus</th>
-            <th scope="col" style="width:27%">Key Topics to Cover</th>
-          </tr>
-        </thead>
-        <tbody id="planBody"></tbody>
-      </table>
-    </div>
-  </section>
+  <!-- PANEL 3: DAILY PLANNER -->
+  <div id="panel-plan" class="tab-panel" role="tabpanel" aria-labelledby="tab-plan">
+    <section aria-labelledby="plan-hd">
+      <h2 class="sec-title" id="plan-hd">Day-by-Day Study Planner</h2>
+      <div class="plan-wrap">
+        <table class="plan-tbl" aria-label="Day-by-day study schedule from 27 April to 1 June 2026">
+          <thead>
+            <tr>
+              <th scope="col" style="width:11%">Date</th>
+              <th scope="col" style="width:6%">Day</th>
+              <th scope="col" style="width:29%">Primary Focus</th>
+              <th scope="col" style="width:27%">Secondary Focus</th>
+              <th scope="col" style="width:27%">Key Topics to Cover</th>
+            </tr>
+          </thead>
+          <tbody id="planBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 
 </main>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Video Lesson</div>
+      <button class="btn-close" id="closeModal" aria-label="Close video">X</button>
+    </div>
+    <div class="video-container">
+      <iframe id="ytFrame" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+  </div>
+</div>
 
 <footer class="ftr" role="contentinfo">
   Progress saved in browser localStorage · BBDU B.Tech CSE 2026 · Timers run on your local time
@@ -228,7 +277,7 @@ body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system
 
 <script>
 /* ================================================================
-   DATA
+   DATA & VIDEO MAPPING
 ================================================================ */
 const SUBJECTS = [
   {
@@ -302,28 +351,35 @@ const SUBJECTS = [
     id:'daa', name:'Design & Analysis of Algorithms', code:'NCS4602',
     color:'#F0C000', examDate:new Date(2026,4,26,14,0,0),
     examDateStr:'26 May 2026 · 2:00 PM – 5:00 PM',
-    note:'Very strong PYQ pattern — Dijkstra graph problems and sorting traces repeat verbatim across papers. Practice on specific PYQ graphs.',
+    note:'Video lectures from CSE Academy are mapped to relevant topics. Watch before checking off!',
     topics:[
-      {t:"Dijkstra's shortest path — step-by-step on a 5-vertex graph",p:'must'},
-      {t:'Quick sort — algorithm, full trace on given array, complexity',p:'must'},
-      {t:'Merge sort — algorithm, full trace on given array, complexity',p:'must'},
-      {t:'Heap sort — build max-heap, extract-max, trace on array',p:'must'},
-      {t:'Asymptotic notations — Big-O, Big-Omega, Theta with formal definitions',p:'must'},
-      {t:'Master theorem — all 3 cases with solved recurrence examples',p:'must'},
-      {t:'0/1 Knapsack — Dynamic Programming table construction (numerical)',p:'must'},
-      {t:'Floyd-Warshall — all-pairs shortest path, matrix step construction',p:'must'},
-      {t:'N-Queens backtracking — full state-space tree for n=4',p:'must'},
-      {t:"Kruskal's MST algorithm — with given weighted graph",p:'imp'},
-      {t:"Prim's MST algorithm",p:'imp'},
-      {t:'Binomial Heap — construction procedure and extract-min',p:'imp'},
-      {t:'Matrix Chain Multiplication — DP optimal parenthesization (4 matrices)',p:'imp'},
-      {t:'KMP string matching — build failure function, matching steps',p:'imp'},
-      {t:'Rabin-Karp string matching — rolling hash simulation',p:'imp'},
-      {t:'Naive string matching algorithm',p:'imp'},
-      {t:'BFS and DFS graph traversal with examples',p:'imp'},
-      {t:'Fractional Knapsack — Greedy approach (numerical)',p:'rev'},
-      {t:'P, NP, NP-hard, NP-complete — definitions and examples',p:'rev'},
-      {t:'Approximation algorithms — TSP application',p:'rev'},
+      {t:'Unit I: Asymptotic Notations',p:'must', vids:['59iqCdOvEdg', 'J5rBIn7zxC8']},
+      {t:'Unit I: Solving Recurrence Relations',p:'must', vids:['_shFO6clDGA', 'JrzWQpPCXM4', '-L2__YthLfU', 'mFVHlb409T8', 'ngh_DcVS8ho', 'wHr7mJ9vJDE', 'fPS5A_iUIVQ', 'Z7WsxAZgQYI', 'f0EjiQZTW8A', 'oiJTU-HaFEM']},
+      {t:'Unit I: B-Trees, Binomial Heap, Fibonacci Heap',p:'imp'},
+      {t:'Unit I: Red-Black Trees',p:'imp', vids:['fKO_2aR1W1w', 'RjEEMObGogc']},
+      {t:'Unit I: Amortized Analysis',p:'imp', vids:['amd-oHXyeYE']},
+      {t:'Unit II: Merge Sort, Quick Sort, Strassen’s',p:'must'},
+      {t:'Unit II: Fractional Knapsack',p:'imp', vids:['q5FdKUUttGY']},
+      {t:'Unit II: Huffman Coding',p:'imp', vids:['2F781HpZIj4']},
+      {t:'Unit II: Prim’s MST',p:'imp'},
+      {t:'Unit II: Kruskal’s MST',p:'imp', vids:['uFdlwhT18I4', 'Ns85jswD8sM', '0E61qo1ete4']},
+      {t:"Unit II: Dijkstra's Algorithm",p:'must', vids:['JPQ-6cdnBc0']},
+      {t:'Unit II: Bellman-Ford Algorithm',p:'imp', vids:['AkSNAqU19jQ']},
+      {t:'Unit III: 0/1 Knapsack',p:'must', vids:['QZAD_lLZei8']},
+      {t:'Unit III: Matrix Chain Multiplication',p:'imp', vids:['T3l86b-wQ80', 'dCJwrr_t7Hw']},
+      {t:'Unit III: Longest Common Subsequence',p:'imp', vids:['7JT8wweXesA']},
+      {t:'Unit III: Optimal BST',p:'imp', vids:['fJDRr8_Bg80', '_U0gYfx-G4s']},
+      {t:'Unit III: Floyd-Warshall',p:'must', vids:['Alg4fNOhg6o', 'fiXy5TqNBRo']},
+      {t:'Unit III: Travelling Salesman Problem',p:'imp', vids:['R-2sI6oqgc8']},
+      {t:'Unit III: Multistage Graph',p:'imp', vids:['L9Fu-KH1QVc']},
+      {t:'Unit IV: BFS & DFS',p:'imp', vids:['F2btGa1TXAI', '3ZMiS3MLuHo']},
+      {t:'Unit IV: N-Queens Problem',p:'must', vids:['tEUeUb0Ipvg', '2y2VH2l3uNE']},
+      {t:'Unit IV: Graph Coloring',p:'imp', vids:['pJmZW2q3T7A', 'OlRft7UISvE', 'vOWIL7OZ28U']},
+      {t:'Unit IV: Hamiltonian Cycle',p:'imp', vids:['x-zpTfj1UGg', 'vhzac057ugE']},
+      {t:'Unit IV: Branch and Bound',p:'rev'},
+      {t:'Unit V: String Matching',p:'rev'},
+      {t:'Unit V: NP-Completeness & Approximation',p:'rev'},
+      {t:'Unit V: Randomized Algorithms',p:'rev'}
     ],
     faqs:[
       {q:"Find shortest path from source vertex 1 to all other vertices using Dijkstra's algorithm (5-vertex graph given).",f:'every'},
@@ -334,7 +390,6 @@ const SUBJECTS = [
       {q:'Find all-pair shortest path using Floyd-Warshall algorithm (construct matrices step by step).',f:'every'},
       {q:'Solve N-Queens problem for n=4 showing complete backtracking state-space tree.',f:'every'},
       {q:'Explain Heap sort with algorithm; apply heap sort on given array.',f:'many'},
-      {q:'Construct Binomial heap for given sequence and run extract-min.',f:'many'},
       {q:'Explain KMP string matching algorithm with example (build failure function).',f:'many'},
       {q:"Using Kruskal's algorithm, find the MST of the given weighted graph.",f:'many'},
       {q:'Find optimal parenthesization for matrix chain multiplication (4 matrices with given orders).',f:'many'},
@@ -466,6 +521,26 @@ const PLAN = [
 ];
 
 /* ================================================================
+   TAB NAVIGATION
+================================================================ */
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    // Remove active class from all
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    panels.forEach(p => p.classList.remove('active'));
+    
+    // Add to clicked
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const target = document.getElementById(tab.getAttribute('aria-controls'));
+    if(target) target.classList.add('active');
+  });
+});
+
+/* ================================================================
    LOCALSTORAGE HELPERS
 ================================================================ */
 const KEY = (sid,i) => `bbdu26_${sid}_${i}`;
@@ -506,6 +581,30 @@ function updateOverall(){
   if(p) p.textContent=pct+'%';
   if(b) b.setAttribute('aria-valuenow',pct);
 }
+
+/* ================================================================
+   VIDEO MODAL LOGIC
+================================================================ */
+const modal = document.getElementById('videoModal');
+const ytFrame = document.getElementById('ytFrame');
+const closeModalBtn = document.getElementById('closeModal');
+const modalTitle = document.getElementById('modalTitle');
+
+function openVideo(videoId, title) {
+  modalTitle.textContent = title;
+  ytFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  modal.classList.add('active');
+}
+
+function closeVideo() {
+  modal.classList.remove('active');
+  ytFrame.src = '';
+}
+
+closeModalBtn.addEventListener('click', closeVideo);
+modal.addEventListener('click', e => {
+  if(e.target === modal) closeVideo();
+});
 
 /* ================================================================
    RENDER EXAM TIMER CARDS
@@ -550,10 +649,25 @@ function renderSubjCards(){
 
     const topicsHtml=s.topics.map((t,i)=>{
       const done=isChk(s.id,i);
+      const vidBtns = (t.vids || []).map((vid, vIdx) => {
+        const label = t.vids.length > 1 ? 'Pt ' + (vIdx + 1) : 'Watch';
+        const safeTitle = t.t.replace(/'/g, "\\'");
+        const modalTitle = t.vids.length > 1 ? safeTitle + ' - Part ' + (vIdx + 1) : safeTitle;
+        return `<button class="btn-yt" onclick="openVideo('${vid}', '${modalTitle}')" title="Watch Video Lecture">
+             <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+             ${label}
+           </button>`;
+      }).join('');
+
       return `<div class="topic-item${done?' done':''}" role="listitem">
         <input type="checkbox" id="cb-${s.id}-${i}" ${done?'checked':''} aria-label="${t.t}">
-        <label for="cb-${s.id}-${i}">${t.t}</label>
-        <span class="ptag ${t.p}" aria-label="Priority: ${t.p==='must'?'Must do':t.p==='imp'?'Important':'Revise'}">${t.p==='must'?'Must':t.p==='imp'?'Imp':'Rev'}</span>
+        <div class="topic-content">
+          <label for="cb-${s.id}-${i}">${t.t}</label>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="ptag ${t.p}" aria-label="Priority: ${t.p==='must'?'Must do':t.p==='imp'?'Important':'Revise'}">${t.p==='must'?'Must':t.p==='imp'?'Imp':'Rev'}</span>
+            ${vidBtns}
+          </div>
+        </div>
       </div>`;
     }).join('');
 
