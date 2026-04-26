@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Prep 2026 — BBDU B.Tech CSE Sem 6</title>
+<style>
+:root{
+  --bg:#FFFBF0;--black:#0A0A0A;--white:#FFFFFE;--gray:#F0ECE0;--gray2:#E4E0D0;
+  --b:3px solid #0A0A0A;--sh:5px 5px 0 #0A0A0A;--sh-sm:3px 3px 0 #0A0A0A;
+  --iot:#0FBFAA;--daa:#F0C000;--cd:#F97316;--cl:#E8306A;--im:#6EC200;
+  --cia:#DC2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--black);font-family:system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;min-height:100vh;}
+:focus-visible{outline:3px solid var(--black);outline-offset:3px;border-radius:2px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+.skip-link{position:absolute;left:-999px;background:var(--black);color:var(--white);padding:.5rem 1rem;font-weight:800;z-index:9999;text-decoration:none;}
+.skip-link:focus{left:0;top:0;}
+
+/* HEADER */
+.hdr{background:var(--black);color:var(--white);padding:1rem 1.5rem;position:sticky;top:0;z-index:200;border-bottom:var(--b);}
+.hdr-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
+.hdr-brand h1{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:900;text-transform:uppercase;letter-spacing:.06em;line-height:1;}
+.hdr-brand p{font-size:.75rem;opacity:.6;margin-top:3px;}
+.hdr-right{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.prog-wrap{display:flex;align-items:center;gap:.5rem;}
+.prog-label{font-size:.72rem;opacity:.65;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
+.prog-bar{width:120px;height:10px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--daa);border-radius:1px;transition:width .4s;}
+.prog-pct{font-size:.85rem;font-weight:800;min-width:36px;text-align:right;}
+.btn-reset{background:var(--cia);color:var(--white);border:2px solid rgba(255,255,255,.4);box-shadow:3px 3px 0 rgba(0,0,0,.4);padding:.35rem .8rem;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;border-radius:2px;transition:transform .1s,box-shadow .1s;white-space:nowrap;}
+.btn-reset:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.4);}
+.btn-reset:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(0,0,0,.4);}
+
+/* CONTENT */
+.wrap{max-width:1240px;margin:0 auto;padding:1.75rem 1.5rem 4rem;}
+.sec-title{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;border-bottom:3px solid var(--black);padding-bottom:.45rem;margin-bottom:1.4rem;}
+
+/* CIA ALERT */
+.cia-box{background:var(--cia);border:var(--b);box-shadow:var(--sh);border-radius:3px;padding:1.2rem 1.4rem;margin-bottom:2.25rem;}
+.cia-hd{font-size:.7rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:.85rem;}
+.cia-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.85rem;}
+.cia-card{background:var(--white);border:2px solid var(--black);border-radius:2px;padding:.85rem 1rem;box-shadow:3px 3px 0 rgba(0,0,0,.45);}
+.cia-card-dt{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--cia);margin-bottom:.2rem;}
+.cia-card-subj{font-size:.95rem;font-weight:800;margin-bottom:.25rem;line-height:1.3;}
+.cia-card-time{font-size:.75rem;color:#555;}
+.cia-cd{font-size:1.25rem;font-weight:900;color:var(--cia);margin-top:.4rem;font-variant-numeric:tabular-nums;letter-spacing:.03em;}
+.cia-expired{font-size:.85rem;font-weight:700;color:var(--cia);}
+
+/* EXAM TIMER GRID */
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:1.1rem;margin-bottom:2.25rem;}
+.exam-card{border:var(--b);border-radius:3px;box-shadow:var(--sh);padding:1.2rem;position:relative;overflow:hidden;background:var(--white);transition:transform .15s,box-shadow .15s;}
+.exam-card:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--black);}
+.exam-stripe{position:absolute;top:0;left:0;right:0;height:7px;}
+.exam-code{font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.55;margin-top:.15rem;}
+.exam-name{font-size:.92rem;font-weight:800;margin:.3rem 0 .25rem;line-height:1.3;}
+.exam-dt{font-size:.72rem;opacity:.55;margin-bottom:.65rem;}
+.exam-timer{font-size:1.55rem;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.03em;}
+.timer-units{display:flex;gap:.25rem;margin-top:4px;}
+.timer-unit{font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.45;flex:0 0 2.8ch;}
+.mini-bar-wrap{margin-top:.8rem;display:flex;align-items:center;gap:.45rem;}
+.mini-bar{flex:1;height:7px;background:var(--gray2);border:2px solid var(--black);border-radius:1px;overflow:hidden;}
+.mini-fill{height:100%;transition:width .4s;}
+.mini-pct{font-size:.72rem;font-weight:800;min-width:30px;text-align:right;}
+
+/* SUBJECT CARDS */
+.subj-cards{margin-bottom:2.25rem;}
+.subj-card{border:var(--b);border-radius:3px;box-shadow:var(--sh);margin-bottom:1.2rem;overflow:hidden;background:var(--white);}
+.subj-hdr{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.2rem;cursor:pointer;user-select:none;gap:1rem;transition:background .1s;border-left-width:7px;border-left-style:solid;}
+.subj-hdr:hover{background:var(--gray);}
+.subj-hdr-l{display:flex;align-items:center;gap:.65rem;flex:1;min-width:0;}
+.subj-dot{width:18px;height:18px;border:2.5px solid var(--black);border-radius:50%;flex-shrink:0;}
+.subj-n{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;}
+.subj-badge{font-size:.65rem;font-weight:800;border:2px solid var(--black);border-radius:2px;padding:1px 6px;white-space:nowrap;background:var(--gray);}
+.subj-hdr-r{display:flex;align-items:center;gap:.85rem;flex-shrink:0;}
+.prog-track{width:75px;height:10px;border:2px solid var(--black);border-radius:1px;overflow:hidden;background:var(--gray2);}
+.prog-track-fill{height:100%;transition:width .4s;}
+.subj-pct{font-size:.78rem;font-weight:800;min-width:38px;text-align:right;}
+.toggle-icon{width:28px;height:28px;border:2.5px solid var(--black);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;line-height:1;transition:transform .2s;flex-shrink:0;}
+.subj-card.open .toggle-icon{transform:rotate(45deg);}
+.subj-body{display:none;border-top:3px solid var(--black);padding:1.4rem;}
+.subj-card.open .subj-body{display:block;}
+.subj-note{font-size:.78rem;opacity:.65;margin-bottom:1.1rem;padding:.5rem .75rem;border-left:4px solid currentColor;background:var(--gray);line-height:1.5;}
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+@media(max-width:680px){.body-grid{grid-template-columns:1fr;}.subj-badge{display:none;}}
+.col-title{font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-bottom:2.5px solid var(--black);padding-bottom:.4rem;margin-bottom:.9rem;}
+
+/* CHECKLIST */
+.topic-item{display:flex;align-items:flex-start;gap:.55rem;padding:.45rem .5rem;border:2px solid transparent;border-radius:2px;margin-bottom:.35rem;transition:border-color .1s,background .1s;}
+.topic-item:hover{border-color:var(--black);background:var(--gray);}
+.topic-item.done label{text-decoration:line-through;opacity:.45;}
+.topic-item input[type=checkbox]{width:17px;height:17px;border:2px solid var(--black);border-radius:2px;cursor:pointer;flex-shrink:0;margin-top:2px;accent-color:var(--black);}
+.topic-item label{font-size:.83rem;line-height:1.45;cursor:pointer;flex:1;}
+.ptag{font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border:1.5px solid;border-radius:2px;flex-shrink:0;margin-top:3px;white-space:nowrap;}
+.ptag.must{background:#FEE2E2;border-color:#DC2626;color:#991B1B;}
+.ptag.imp{background:#FFF7ED;border-color:#F97316;color:#9A3412;}
+.ptag.rev{background:#F0FDF4;border-color:#16A34A;color:#14532D;}
+
+/* FAQ */
+.faq-item{border:2.5px solid var(--black);border-radius:2px;padding:.6rem .75rem .6rem .75rem;margin-bottom:.55rem;box-shadow:var(--sh-sm);font-size:.83rem;line-height:1.5;position:relative;}
+.fq-tag{display:inline-block;font-size:.58rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-bottom:.35rem;}
+.fq-tag.every{background:var(--cia);color:var(--white);}
+.fq-tag.many{background:var(--cd);color:var(--white);}
+
+/* PLANNER */
+.plan-wrap{overflow-x:auto;}
+.plan-tbl{width:100%;border-collapse:collapse;min-width:680px;font-size:.82rem;}
+.plan-tbl th{background:var(--black);color:var(--white);text-align:left;padding:.55rem .75rem;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid #333;}
+.plan-tbl td{padding:.48rem .75rem;border:1.5px solid #d0ccc0;vertical-align:top;}
+.plan-tbl tr:nth-child(even) td{background:rgba(0,0,0,.02);}
+.phase-r td{background:var(--black);color:var(--white);font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .75rem;}
+.exam-r td{font-weight:800;font-size:.88rem;}
+.day-c{font-weight:700;white-space:nowrap;}
+.tag{display:inline-block;font-size:.62rem;font-weight:800;padding:1px 6px;border:1.5px solid var(--black);border-radius:2px;margin:1px 2px 1px 0;text-transform:uppercase;letter-spacing:.04em;}
+.tag-iot{background:var(--iot);color:var(--black);}
+.tag-daa{background:var(--daa);color:var(--black);}
+.tag-cd{background:var(--cd);color:var(--white);}
+.tag-cl{background:var(--cl);color:var(--white);}
+.tag-im{background:var(--im);color:var(--black);}
+
+/* FOOTER */
+.ftr{max-width:1240px;margin:0 auto;padding:.75rem 1.5rem;border-top:3px solid var(--black);font-size:.75rem;opacity:.5;text-align:center;}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .wrap{padding:1rem 1rem 3rem;}
+  .hdr-inner{flex-direction:column;align-items:flex-start;}
+  .hdr-right{width:100%;}
+  .prog-bar{flex:1;}
+  .exam-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
+  .subj-hdr{flex-direction:column;align-items:flex-start;}
+  .subj-hdr-r{width:100%;justify-content:flex-end;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- HEADER -->
+<header class="hdr" role="banner">
+  <div class="hdr-inner">
+    <div class="hdr-brand">
+      <h1>Exam Prep 2026</h1>
+      <p>BBDU · B.Tech CSE · 6th Semester · Section CS-3F</p>
+    </div>
+    <div class="hdr-right">
+      <div class="prog-wrap" role="group" aria-label="Overall preparation progress">
+        <span class="prog-label">Overall</span>
+        <div class="prog-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Overall topic completion">
+          <div class="prog-fill" id="ovFill" style="width:0%"></div>
+        </div>
+        <span class="prog-pct" id="ovPct" aria-live="polite">0%</span>
+      </div>
+      <button class="btn-reset" id="btnReset" aria-label="Reset all progress checkboxes">Reset All</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- CIA SECTION -->
+  <section aria-labelledby="cia-hd">
+    <div class="cia-box">
+      <p class="cia-hd" id="cia-hd" role="heading" aria-level="2">CIA Examinations — Continuous Internal Assessment</p>
+      <div class="cia-grid">
+        <div class="cia-card">
+          <p class="cia-card-dt">Monday, 27 April 2026</p>
+          <p class="cia-card-subj">Industrial Mgmt + DAA</p>
+          <p class="cia-card-time">NHS4601: 10:00–11:00 AM &nbsp;|&nbsp; NCS4602: 11:00–12:00 PM</p>
+          <p class="cia-cd" id="cia1" aria-live="polite" aria-atomic="true" aria-label="Countdown to CIA on 27 April">Loading...</p>
+        </div>
+        <div class="cia-card">
+          <p class="cia-card-dt">Tuesday, 28 April 2026</p>
+          <p class="cia-card-subj">Compiler Design + Cyber Law</p>
+          <p class="cia-card-time">NCS4604: 10:00–11:00 AM &nbsp;|&nbsp; NPEC43213: 11:00–12:00 PM</p>
+          <p class="cia-cd" id="cia2" aria-live="polite" aria-atomic="true">Loading...</p>
+        </div>
+        <div class="cia-card">
+          <p class="cia-card-dt">Wednesday, 29 April 2026</p>
+          <p class="cia-card-subj">Internet of Things</p>
+          <p class="cia-card-time">NPEC43224: 10:00–11:00 AM</p>
+          <p class="cia-cd" id="cia3" aria-live="polite" aria-atomic="true">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN EXAM TIMERS -->
+  <section aria-labelledby="main-hd">
+    <h2 class="sec-title" id="main-hd">Main Examinations — Countdown</h2>
+    <div class="exam-grid" id="examGrid" role="list"></div>
+  </section>
+
+  <!-- SUBJECT ACCORDIONS -->
+  <section aria-labelledby="subj-hd">
+    <h2 class="sec-title" id="subj-hd">Subject Preparation — Topics Checklist &amp; PYQ Analysis</h2>
+    <p style="font-size:.8rem;opacity:.65;margin-bottom:1.2rem;">Click any subject card to expand. Check topics as you study — progress is saved automatically in your browser.</p>
+    <div class="subj-cards" id="subjCards"></div>
+  </section>
+
+  <!-- DAILY PLANNER -->
+  <section aria-labelledby="plan-hd">
+    <h2 class="sec-title" id="plan-hd">Day-by-Day Study Planner</h2>
+    <div class="plan-wrap">
+      <table class="plan-tbl" aria-label="Day-by-day study schedule from 27 April to 1 June 2026">
+        <thead>
+          <tr>
+            <th scope="col" style="width:11%">Date</th>
+            <th scope="col" style="width:6%">Day</th>
+            <th scope="col" style="width:29%">Primary Focus</th>
+            <th scope="col" style="width:27%">Secondary Focus</th>
+            <th scope="col" style="width:27%">Key Topics to Cover</th>
+          </tr>
+        </thead>
+        <tbody id="planBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ftr" role="contentinfo">
+  Progress saved in browser localStorage · BBDU B.Tech CSE 2026 · Timers run on your local time
+</footer>
+
+<script>
+/* ================================================================
+   DATA
+================================================================ */
+const SUBJECTS = [
+  {
+    id:'iot', name:'Internet of Things', code:'NPEC43224',
+    color:'#0FBFAA', examDate:new Date(2026,4,15,14,0,0),
+    examDateStr:'15 May 2026 · 2:00 PM – 5:00 PM',
+    note:'PYQ source: BCA 2025-26 Odd Sem paper (BCACSN15325). IoT fundamentals are universal — question patterns apply to B.Tech as well.',
+    topics:[
+      {t:'IoT — definition, characteristics and functional blocks',p:'must'},
+      {t:'Sensor types — temperature, pressure, digital & analog sensors',p:'must'},
+      {t:'Actuators — definition, types and role in IoT systems',p:'must'},
+      {t:'WSN (Wireless Sensor Networks) — architecture and advantages',p:'must'},
+      {t:'M2M vs IoT — key differences and evolution path',p:'must'},
+      {t:'Communication protocol — MQTT (pub/sub model)',p:'must'},
+      {t:'Communication protocols — AMQP, REST APIs, Zigbee',p:'must'},
+      {t:'IoT applications — healthcare and fitness monitoring',p:'must'},
+      {t:'IoT applications — agriculture, industry (IIoT) and home automation',p:'must'},
+      {t:'IoT security — common attack types and defense mechanisms',p:'imp'},
+      {t:'Arduino vs Raspberry Pi — hardware platform comparison',p:'imp'},
+      {t:'IoT architectural overview — physical and logical design of IoT',p:'imp'},
+      {t:'Conceptual framework of IoT — functions of each layer',p:'imp'},
+      {t:'IoT design principles — security by design, energy efficiency',p:'rev'},
+      {t:'IPv6 and IoT scalability — why IPv6 is important for IoT',p:'rev'},
+      {t:'HART protocol — relevance in industrial IoT',p:'rev'},
+      {t:'Gateway role in wireless IoT networks',p:'rev'},
+    ],
+    faqs:[
+      {q:'Define IoT and explain its characteristics and functional blocks with diagram.',f:'every'},
+      {q:'Explain different types of sensors used in IoT with examples.',f:'every'},
+      {q:'Explain the architecture and advantages of Wireless Sensor Networks (WSNs).',f:'every'},
+      {q:'Explain machine-to-machine (M2M) communication and how it differs from IoT.',f:'every'},
+      {q:'Discuss major application areas of IoT with suitable examples.',f:'every'},
+      {q:'Describe the conceptual framework of IoT and explain the functions of each layer.',f:'many'},
+      {q:'Describe common attacks on IoT systems and possible defense mechanisms.',f:'many'},
+      {q:'Compare IoT hardware platforms — Arduino and Raspberry Pi.',f:'many'},
+      {q:'Discuss the differences between AMQP and MQTT protocols in IoT communication.',f:'many'},
+      {q:'Explain Zigbee architecture and its applications in IoT networks.',f:'many'},
+      {q:'Describe IPv6 and explain why it is important for IoT scalability.',f:'many'},
+    ]
+  },
+  {
+    id:'im', name:'Industrial Management', code:'NHS4601',
+    color:'#6EC200', examDate:new Date(2026,4,22,14,0,0),
+    examDateStr:'22 May 2026 · 2:00 PM – 5:00 PM',
+    note:'No PYQ available for this subject. All topic priorities are derived from the syllabus — all three modules are equally examinable.',
+    topics:[
+      {t:'CPM — Critical Path Method, network diagram, forward/backward pass, float',p:'must'},
+      {t:'PERT — three-time estimate, expected time, difference from CPM',p:'must'},
+      {t:'Plant layout — types (process, product, fixed-position, cellular), selection factors',p:'must'},
+      {t:'Quality Control — SQC concept and statistical techniques (control charts)',p:'must'},
+      {t:'TQM — Total Quality Management, principles and implementation',p:'must'},
+      {t:'Production Management — types of production systems, planning & control',p:'imp'},
+      {t:'Inventory control — EOQ deterministic model (numerical)',p:'imp'},
+      {t:'Supply Chain Management — concept, components and overview',p:'imp'},
+      {t:'Plant location — factors influencing location decisions',p:'rev'},
+      {t:'Work study — method study and work measurement',p:'rev'},
+      {t:'Productivity measurement — definition and improvement methods',p:'rev'},
+      {t:'Project crashing and resource leveling in project management',p:'rev'},
+    ],
+    faqs:[
+      {q:'Draw network diagram and find critical path using CPM (numerical problem).',f:'every'},
+      {q:'Explain PERT with example; differentiate between CPM and PERT.',f:'every'},
+      {q:'Explain types of plant layout and factors affecting layout selection.',f:'every'},
+      {q:'Explain TQM principles and its implementation in industry.',f:'many'},
+      {q:'Explain SQC — statistical quality control concept and techniques.',f:'many'},
+      {q:'Solve inventory control problem using EOQ deterministic model.',f:'many'},
+      {q:'Explain the concept and components of Supply Chain Management.',f:'many'},
+    ]
+  },
+  {
+    id:'daa', name:'Design & Analysis of Algorithms', code:'NCS4602',
+    color:'#F0C000', examDate:new Date(2026,4,26,14,0,0),
+    examDateStr:'26 May 2026 · 2:00 PM – 5:00 PM',
+    note:'Very strong PYQ pattern — Dijkstra graph problems and sorting traces repeat verbatim across papers. Practice on specific PYQ graphs.',
+    topics:[
+      {t:"Dijkstra's shortest path — step-by-step on a 5-vertex graph",p:'must'},
+      {t:'Quick sort — algorithm, full trace on given array, complexity',p:'must'},
+      {t:'Merge sort — algorithm, full trace on given array, complexity',p:'must'},
+      {t:'Heap sort — build max-heap, extract-max, trace on array',p:'must'},
+      {t:'Asymptotic notations — Big-O, Big-Omega, Theta with formal definitions',p:'must'},
+      {t:'Master theorem — all 3 cases with solved recurrence examples',p:'must'},
+      {t:'0/1 Knapsack — Dynamic Programming table construction (numerical)',p:'must'},
+      {t:'Floyd-Warshall — all-pairs shortest path, matrix step construction',p:'must'},
+      {t:'N-Queens backtracking — full state-space tree for n=4',p:'must'},
+      {t:"Kruskal's MST algorithm — with given weighted graph",p:'imp'},
+      {t:"Prim's MST algorithm",p:'imp'},
+      {t:'Binomial Heap — construction procedure and extract-min',p:'imp'},
+      {t:'Matrix Chain Multiplication — DP optimal parenthesization (4 matrices)',p:'imp'},
+      {t:'KMP string matching — build failure function, matching steps',p:'imp'},
+      {t:'Rabin-Karp string matching — rolling hash simulation',p:'imp'},
+      {t:'Naive string matching algorithm',p:'imp'},
+      {t:'BFS and DFS graph traversal with examples',p:'imp'},
+      {t:'Fractional Knapsack — Greedy approach (numerical)',p:'rev'},
+      {t:'P, NP, NP-hard, NP-complete — definitions and examples',p:'rev'},
+      {t:'Approximation algorithms — TSP application',p:'rev'},
+    ],
+    faqs:[
+      {q:"Find shortest path from source vertex 1 to all other vertices using Dijkstra's algorithm (5-vertex graph given).",f:'every'},
+      {q:'Sort given array using Quick sort (show all partitioning steps).',f:'every'},
+      {q:'Sort given array using Merge sort algorithm.',f:'every'},
+      {q:'Solve given recurrence using Master theorem.',f:'every'},
+      {q:'Find optimal solution for 0/1 Knapsack problem using Dynamic Programming (table method).',f:'every'},
+      {q:'Find all-pair shortest path using Floyd-Warshall algorithm (construct matrices step by step).',f:'every'},
+      {q:'Solve N-Queens problem for n=4 showing complete backtracking state-space tree.',f:'every'},
+      {q:'Explain Heap sort with algorithm; apply heap sort on given array.',f:'many'},
+      {q:'Construct Binomial heap for given sequence and run extract-min.',f:'many'},
+      {q:'Explain KMP string matching algorithm with example (build failure function).',f:'many'},
+      {q:"Using Kruskal's algorithm, find the MST of the given weighted graph.",f:'many'},
+      {q:'Find optimal parenthesization for matrix chain multiplication (4 matrices with given orders).',f:'many'},
+    ]
+  },
+  {
+    id:'cd', name:'Compiler Design', code:'NCS4604',
+    color:'#F97316', examDate:new Date(2026,4,29,14,0,0),
+    examDateStr:'29 May 2026 · 2:00 PM – 5:00 PM',
+    note:'Parsing table construction (SLR/CLR/LALR) is the most heavily repeated topic — every single paper has at least one parsing table question.',
+    topics:[
+      {t:'All phases of compiler — detailed with input/output of each phase',p:'must'},
+      {t:'SLR(1) parsing table — LR(0) items, closure, goto, ACTION/GOTO table',p:'must'},
+      {t:'CLR(1) parsing table — canonical LR(1) items and construction',p:'must'},
+      {t:'LALR(1) parsing table — merging compatible LR(1) states',p:'must'},
+      {t:'DFA construction for regular expressions (e.g. a*b(a+b)*)',p:'must'},
+      {t:'CFG — check ambiguity, leftmost and rightmost derivation',p:'must'},
+      {t:'FIRST and FOLLOW set computation for given grammar',p:'must'},
+      {t:'3-address code generation for assignment statements',p:'must'},
+      {t:'Quadruples, Triples and Indirect Triples for given expression',p:'must'},
+      {t:'Bootstrapping — T-diagram explanation and types of cross-compilers',p:'must'},
+      {t:'Recursive descent parser — design from grammar (E→E+T|T, T→T*F|F)',p:'imp'},
+      {t:'Code optimization — loop opt, strength reduction, copy propagation',p:'imp'},
+      {t:'Peephole optimization — techniques and examples',p:'imp'},
+      {t:'DAG construction for expressions using mknode and mkleaf',p:'imp'},
+      {t:'Syntax tree and annotated parse tree construction',p:'imp'},
+      {t:'Symbol table — structure, operations (insert, lookup) and management',p:'imp'},
+      {t:'LL(1) parsing table — predictive parsing, panic mode recovery',p:'imp'},
+      {t:'Operator precedence parser construction and parsing',p:'rev'},
+      {t:'Activation record — structure and runtime storage allocation strategies',p:'rev'},
+      {t:'Error handling types — lexical, syntax, semantic errors',p:'rev'},
+      {t:'Left recursion removal and left factoring of grammar',p:'rev'},
+    ],
+    faqs:[
+      {q:'Explain all phases of compiler in detail with diagram and example for each phase.',f:'every'},
+      {q:'Construct SLR / CLR / LALR parsing table for given grammar (identify shift-reduce conflicts).',f:'every'},
+      {q:'Draw DFA for given regular expression (e.g. a*b(a+b)* or (a|b)*(abb|a+b)).',f:'every'},
+      {q:'Explain CFG and check whether given grammar is ambiguous or not.',f:'every'},
+      {q:'Find FIRST and FOLLOW sets for all non-terminals in the given grammar.',f:'every'},
+      {q:'Write Quadruples, Triples and Indirect Triple form for expression e.g. (x+y)*(y+z)+(x+y+z).',f:'every'},
+      {q:'Explain bootstrapping with T-diagram to develop a compiler for a new language.',f:'many'},
+      {q:'Design recursive descent parser for given grammar E→E+T|T, T→T*F|F, F→(E)|id.',f:'many'},
+      {q:'Calculate compilation process for assignment statement: Position = initial + rate * 70.',f:'many'},
+      {q:'Explain code optimization — strength reduction, frequency reduction, copy propagation (with examples).',f:'many'},
+      {q:'Construct DAG for given expression and write sequence of instructions used.',f:'many'},
+      {q:'Construct canonical LR(0) collection and identify shift-reduce conflict.',f:'many'},
+    ]
+  },
+  {
+    id:'cl', name:'Cyber Law & Security', code:'NPEC43213',
+    color:'#E8306A', examDate:new Date(2026,5,1,14,0,0),
+    examDateStr:'1 June 2026 · 2:00 PM – 5:00 PM',
+    note:'Section-C questions are long-form conceptual essays (5 marks each). Practice writing structured 8–10 line answers for every must-do topic.',
+    topics:[
+      {t:'CIA Triad — Confidentiality, Integrity, Availability (definitions + examples)',p:'must'},
+      {t:'Cryptography — symmetric vs asymmetric key systems (DES, AES vs RSA)',p:'must'},
+      {t:'VPN — types (PPTP, L2TP, IPSec), tunneling mechanism, security concerns',p:'must'},
+      {t:'Firewalls — types, design issues, implementation in network security',p:'must'},
+      {t:'Cyber crimes — types (phishing, ransomware, identity theft) with examples',p:'must'},
+      {t:'Indian IT Act 2000 — major provisions related to cyber offences',p:'must'},
+      {t:'IDS and IPS — working principle, types, role in protecting networks',p:'imp'},
+      {t:'Digital signatures — role, requirements, ensuring document security',p:'imp'},
+      {t:'Biometric systems — fingerprint recognition, selection criteria, limitations',p:'imp'},
+      {t:'Intellectual Property Rights — copyright, patent; ethical issues in IPR',p:'imp'},
+      {t:'Information system threats — classification and damage assessment',p:'imp'},
+      {t:'E-payment systems — e-cash, credit/debit card components and functioning',p:'rev'},
+      {t:'ISO 27001 — purpose and information security management framework',p:'rev'},
+      {t:'Authentication services — multi-factor, biometric; organisational implications',p:'rev'},
+      {t:'Software piracy and plagiarism — differences with digital media examples',p:'rev'},
+    ],
+    faqs:[
+      {q:'Define and explain the CIA Triad — Confidentiality, Integrity, Availability as core principles of information security.',f:'every'},
+      {q:'Describe symmetric and asymmetric key cryptography; differentiate between them with examples.',f:'every'},
+      {q:'Explain VPN — types, tunneling; how authentication mechanism enhances VPN security.',f:'every'},
+      {q:'Discuss design and implementation issues in firewalls; explain types of firewalls.',f:'every'},
+      {q:'Explain different types of cyber crimes with suitable examples.',f:'every'},
+      {q:'Discuss major provisions of Indian IT Act 2000 related to cyber offences and data privacy.',f:'many'},
+      {q:'Explain the concept of IDS (Intrusion Detection System) — working principle, types, how it protects networks.',f:'many'},
+      {q:'Explain the role of digital signatures and their requirements in ensuring document security.',f:'many'},
+      {q:'Define IPR — copyright and patent; discuss the ethical issues involved in intellectual property rights.',f:'many'},
+      {q:'What are major types of threats and attacks on information systems? How can organisations assess damages?',f:'many'},
+    ]
+  }
+];
+
+const PLAN = [
+  {ph:'Phase 1 — CIA Examinations (27–29 April)'},
+  {d:'27 Apr',dy:'Mon',tags:[{t:'IM',c:'im'},{t:'DAA',c:'daa'}],pri:'CIA 10–12 AM · IM then DAA revision',sec:'Revision only before exam',kp:'IM: CPM/PERT, plant layout, TQM · DAA: sorting time complexities, Big-O, Omega, Theta, Master theorem'},
+  {d:'28 Apr',dy:'Tue',tags:[{t:'CD',c:'cd'},{t:'CL',c:'cl'}],pri:'CIA 10–12 AM · CD then CL revision',sec:'Revision only before exam',kp:'CD: phases of compiler, DFA, CFG ambiguity check · CL: CIA triad, VPN tunneling, cryptography types'},
+  {d:'29 Apr',dy:'Wed',tags:[{t:'IoT',c:'iot'}],pri:'CIA 10–11 AM · IoT revision',sec:'Post-CIA: start full IoT prep',kp:'Pre-exam: sensors, WSN, MQTT · Post-exam: complete Module 1 — IoT definition, functional blocks, communication protocols'},
+  {ph:'Phase 2 — IoT Main Prep (30 Apr – 14 May)'},
+  {d:'30 Apr',dy:'Thu',tags:[{t:'IoT',c:'iot'},{t:'IM',c:'im'}],pri:'IoT Module 1 deep dive',sec:'IM intro reading',kp:'IoT: sensing, actuation, networking basics, communication protocols detailed · IM: concept, scope, types of production'},
+  {d:'1 May',dy:'Fri',tags:[{t:'IoT',c:'iot'},{t:'IM',c:'im'}],pri:'IoT sensor types & WSN',sec:'IM Module 2 reading',kp:'IoT: digital vs analog sensors, actuator types, WSN architecture + advantages · IM: plant location factors, layout types & selection'},
+  {d:'2 May',dy:'Sat',tags:[{t:'IoT',c:'iot'},{t:'DAA',c:'daa'}],pri:'IoT M2M to IoT transition',sec:'DAA sorting algorithms',kp:'IoT: M2M evolution, value chains, IoT value chains · DAA: Merge sort algorithm + trace on array, Quick sort algorithm + trace'},
+  {d:'3 May',dy:'Sun',tags:[{t:'IoT',c:'iot'},{t:'DAA',c:'daa'}],pri:'IoT architectures & reference model',sec:'DAA sorting continued',kp:'IoT: physical/logical design, reference model, M2M vs IoT arch overview · DAA: Heap sort build+extract, Insertion sort, counting sort'},
+  {d:'4 May',dy:'Mon',tags:[{t:'IoT',c:'iot'},{t:'CD',c:'cd'}],pri:'IoT reference architecture views',sec:'CD: compiler phases',kp:"IoT: functional, operational, deployment views · CD: all 6 phases with each phase's input/output, symbol table operations"},
+  {d:'5 May',dy:'Tue',tags:[{t:'IoT',c:'iot'},{t:'CD',c:'cd'}],pri:'IoT domain applications',sec:'CD: DFA & regular expressions',kp:'IoT: healthcare, agriculture, industrial, home automation applications · CD: RE → NFA → DFA construction, LEX tool overview'},
+  {d:'6 May',dy:'Wed',tags:[{t:'IoT',c:'iot'},{t:'CL',c:'cl'}],pri:'IoT security attacks & defense',sec:'CL: threats & CIA triad',kp:'IoT: DDoS, MITM, spoofing on IoT devices; defense mechanisms · CL: CIA triad in depth, IS threats classification, damage assessment'},
+  {d:'7 May',dy:'Thu',tags:[{t:'IoT',c:'iot'},{t:'CL',c:'cl'}],pri:'IoT protocols deep dive',sec:'CL: cryptography systems',kp:'IoT: MQTT vs AMQP, REST in IoT, Zigbee, IPv6 scalability, HART protocol · CL: symmetric (DES, AES) vs asymmetric (RSA), public key infra'},
+  {d:'8 May',dy:'Fri',tags:[{t:'IoT',c:'iot'},{t:'DAA',c:'daa'}],pri:'IoT hardware platforms',sec:"DAA: Dijkstra's algorithm",kp:"IoT: Arduino vs Raspberry Pi, participatory sensing, WSN revision · DAA: Dijkstra's step-by-step on PYQ 5-vertex graph"},
+  {d:'9 May',dy:'Sat',tags:[{t:'IoT',c:'iot'},{t:'DAA',c:'daa'}],pri:'IoT design principles',sec:'DAA: Greedy algorithms',kp:"IoT: security by design, energy constraints, connected device principles · DAA: fractional knapsack, Kruskal's MST, Prim's MST"},
+  {d:'10 May',dy:'Sun',tags:[{t:'DAA',c:'daa'},{t:'IoT',c:'iot'}],pri:'DAA: Master theorem all 3 cases',sec:'IoT full PYQ solve',kp:'DAA: 3 cases of Master theorem — solve 6 recurrences from scratch · IoT: attempt BCA 2025-26 paper completely and self-check'},
+  {d:'11 May',dy:'Mon',tags:[{t:'IoT',c:'iot'},{t:'IM',c:'im'}],pri:'IoT full syllabus revision',sec:'IM Module 3 topics',kp:'IoT: all 3 modules quick revision · IM: inventory EOQ formula, supply chain management, work study basics'},
+  {d:'12 May',dy:'Tue',tags:[{t:'IoT',c:'iot'},{t:'IM',c:'im'}],pri:'IoT PYQ full solve',sec:'IM quality & TQM',kp:'IoT: full paper attempt + self-check · IM: quality control chart types, TQM implementation, SQC techniques'},
+  {d:'13 May',dy:'Wed',tags:[{t:'IoT',c:'iot'},{t:'IM',c:'im'}],pri:'IoT must-do topics only',sec:'IM CPM + PERT numericals',kp:'IoT: final revision — definitions, app areas, protocol comparison summary · IM: solve one CPM network, find critical path, project crashing'},
+  {d:'14 May',dy:'Thu',tags:[{t:'IoT',c:'iot'}],pri:'IoT last-day summary revision',sec:'—',kp:'IoT: summary sheet only — write key definitions, application areas table, protocol comparison — no new topics'},
+  {ex:true,d:'15 May (Fri)',lb:'EXAM — Internet of Things',col:'#0FBFAA'},
+  {ph:'Phase 3 — Industrial Management Prep (16–21 May)'},
+  {d:'16 May',dy:'Sat',tags:[{t:'IM',c:'im'},{t:'DAA',c:'daa'}],pri:'IM Module 1 complete',sec:'DAA: DP introduction',kp:'IM: IM concept, scope, production management systems, productivity measurement · DAA: DP approach, 0/1 Knapsack table construction'},
+  {d:'17 May',dy:'Sun',tags:[{t:'IM',c:'im'},{t:'DAA',c:'daa'}],pri:'IM Module 2 complete',sec:'DAA: Floyd-Warshall',kp:'IM: plant maintenance, plant layout types, industrial safety, work study · DAA: Floyd-Warshall matrix — construct step by step on PYQ graph'},
+  {d:'18 May',dy:'Mon',tags:[{t:'IM',c:'im'},{t:'DAA',c:'daa'}],pri:'IM Module 3: inventory & SC',sec:'DAA: Matrix Chain DP',kp:'IM: inventory deterministic models, EOQ formula + numerical, supply chain · DAA: matrix chain multiplication optimal parenthesization (4×4 matrix)'},
+  {d:'19 May',dy:'Tue',tags:[{t:'IM',c:'im'},{t:'DAA',c:'daa'}],pri:'IM: CPM + PERT numericals',sec:'DAA: N-Queens backtracking',kp:'IM: project network, critical path calculation, ES/EF/LS/LF, float types, PERT 3-time estimate · DAA: N-Queens n=4 full state tree'},
+  {d:'20 May',dy:'Wed',tags:[{t:'IM',c:'im'},{t:'CD',c:'cd'}],pri:'IM TQM + quality control',sec:'CD: FIRST/FOLLOW + LL(1)',kp:'IM: TQM principles, SQC, quality control chart types · CD: FIRST/FOLLOW algorithm, LL(1) parsing table from scratch'},
+  {d:'21 May',dy:'Thu',tags:[{t:'IM',c:'im'}],pri:'IM full revision — all modules',sec:'—',kp:'IM: revise all 3 modules — write short answers for each major topic, solve one CPM numerical to verify'},
+  {ex:true,d:'22 May (Fri)',lb:'EXAM — Industrial Management',col:'#6EC200'},
+  {ph:'Phase 4 — DAA Final Prep (23–25 May)'},
+  {d:'23 May',dy:'Sat',tags:[{t:'DAA',c:'daa'},{t:'CD',c:'cd'}],pri:'DAA: string matching algorithms',sec:'CD: SLR parsing table',kp:"DAA: Naive algorithm, KMP (build failure function), Rabin-Karp (hash rolling simulation) · CD: SLR — LR(0) items, closure, goto, ACTION/GOTO table"},
+  {d:'24 May',dy:'Sun',tags:[{t:'DAA',c:'daa'},{t:'CD',c:'cd'}],pri:'DAA: NP + BFS/DFS + approx',sec:'CD: CLR + LALR tables',kp:'DAA: P/NP/NP-hard/NPC definitions, TSP approximation, BFS+DFS with examples · CD: CLR(1) items, LALR state merging procedure'},
+  {d:'25 May',dy:'Mon',tags:[{t:'DAA',c:'daa'}],pri:'DAA: full PYQ revision',sec:'—',kp:"DAA: attempt Dijkstra PYQ graph, Floyd-Warshall matrix, Kruskal's MST, Merge/Quick sort on PYQ arrays from paper"},
+  {ex:true,d:'26 May (Tue)',lb:'EXAM — Design & Analysis of Algorithms',col:'#F0C000'},
+  {ph:'Phase 5 — Compiler Design Final Prep (27–28 May)'},
+  {d:'27 May',dy:'Wed',tags:[{t:'CD',c:'cd'},{t:'CL',c:'cl'}],pri:'CD: 3-addr code, Quad/Triple, DAG',sec:'CL: VPN + firewall + IDS',kp:'CD: 3-address code for assignments; Quadruples/Triples/Indirect Triples for (x+y)*(y+z); DAG using mknode · CL: VPN types, firewall design issues, IDS working principle'},
+  {d:'28 May',dy:'Thu',tags:[{t:'CD',c:'cd'}],pri:'CD: code optimization + full PYQ',sec:'—',kp:'CD: loop opt, strength reduction, copy propagation, peephole optimization; activation record; attempt full 2023-24 university paper'},
+  {ex:true,d:'29 May (Fri)',lb:'EXAM — Compiler Design',col:'#F97316'},
+  {ph:'Phase 6 — Cyber Law Final Prep (30–31 May)'},
+  {d:'30 May',dy:'Sat',tags:[{t:'CL',c:'cl'}],pri:'CL: cryptography + digital security',sec:'—',kp:'CL: symmetric vs asymmetric depth; digital signatures; biometric systems; access control; write 8-line answers for CIA triad'},
+  {d:'31 May',dy:'Sun',tags:[{t:'CL',c:'cl'}],pri:'CL: cyber crime + IT Act + PYQ',sec:'—',kp:'CL: cyber crime types; IT Act 2000 provisions; IPR — copyright/patent; IDS vs IPS; attempt 2025-26 B.Tech paper fully'},
+  {ex:true,d:'1 Jun (Mon)',lb:'EXAM — Cyber Law & Security',col:'#E8306A'},
+];
+
+/* ================================================================
+   LOCALSTORAGE HELPERS
+================================================================ */
+const KEY = (sid,i) => `bbdu26_${sid}_${i}`;
+const isChk = (sid,i) => localStorage.getItem(KEY(sid,i)) === '1';
+const setChk = (sid,i,v) => localStorage.setItem(KEY(sid,i), v ? '1' : '0');
+const countChk = sid => {
+  const s = SUBJECTS.find(x=>x.id===sid);
+  return s ? s.topics.filter((_,i)=>isChk(sid,i)).length : 0;
+};
+
+/* ================================================================
+   PROGRESS UPDATERS
+================================================================ */
+function updateSubjProg(sid){
+  const s = SUBJECTS.find(x=>x.id===sid);
+  if(!s) return;
+  const chk=countChk(sid), tot=s.topics.length;
+  const pct=Math.round(chk/tot*100);
+  const fill=document.getElementById('spf-'+sid);
+  const lbl=document.getElementById('spl-'+sid);
+  const trk=document.getElementById('spt-'+sid);
+  const mfil=document.getElementById('mf-'+sid);
+  const mpct=document.getElementById('mp-'+sid);
+  if(fill) fill.style.width=pct+'%';
+  if(lbl) lbl.textContent=chk+'/'+tot;
+  if(trk) trk.setAttribute('aria-valuenow',pct);
+  if(mfil) mfil.style.width=pct+'%';
+  if(mpct) mpct.textContent=pct+'%';
+}
+function updateOverall(){
+  let tot=0,chk=0;
+  SUBJECTS.forEach(s=>{tot+=s.topics.length;chk+=countChk(s.id);});
+  const pct=Math.round(chk/tot*100);
+  const f=document.getElementById('ovFill');
+  const p=document.getElementById('ovPct');
+  const b=document.querySelector('.prog-bar');
+  if(f) f.style.width=pct+'%';
+  if(p) p.textContent=pct+'%';
+  if(b) b.setAttribute('aria-valuenow',pct);
+}
+
+/* ================================================================
+   RENDER EXAM TIMER CARDS
+================================================================ */
+function renderExamCards(){
+  const g=document.getElementById('examGrid');
+  SUBJECTS.forEach(s=>{
+    const chk=countChk(s.id), tot=s.topics.length;
+    const pct=Math.round(chk/tot*100);
+    const div=document.createElement('div');
+    div.className='exam-card';
+    div.setAttribute('role','listitem');
+    div.setAttribute('aria-label',s.name+' exam countdown');
+    div.innerHTML=
+      `<div class="exam-stripe" style="background:${s.color}"></div>
+       <p class="exam-code">${s.code}</p>
+       <h3 class="exam-name">${s.name}</h3>
+       <p class="exam-dt">${s.examDateStr}</p>
+       <div class="exam-timer" id="t-${s.id}" aria-live="off" aria-label="${s.name} countdown timer">--:--:--:--</div>
+       <div class="timer-units"><span class="timer-unit">DD</span><span class="timer-unit">HH</span><span class="timer-unit">MM</span><span class="timer-unit">SS</span></div>
+       <div class="mini-bar-wrap">
+         <div class="mini-bar" role="progressbar" id="mb-${s.id}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${s.name} prep progress">
+           <div class="mini-fill" id="mf-${s.id}" style="width:${pct}%;background:${s.color}"></div>
+         </div>
+         <span class="mini-pct" id="mp-${s.id}">${pct}%</span>
+       </div>`;
+    g.appendChild(div);
+  });
+}
+
+/* ================================================================
+   RENDER SUBJECT ACCORDION CARDS
+================================================================ */
+function renderSubjCards(){
+  const c=document.getElementById('subjCards');
+  SUBJECTS.forEach(s=>{
+    const chk=countChk(s.id), tot=s.topics.length;
+    const pct=Math.round(chk/tot*100);
+    const card=document.createElement('div');
+    card.className='subj-card';
+    card.id='sc-'+s.id;
+
+    const topicsHtml=s.topics.map((t,i)=>{
+      const done=isChk(s.id,i);
+      return `<div class="topic-item${done?' done':''}" role="listitem">
+        <input type="checkbox" id="cb-${s.id}-${i}" ${done?'checked':''} aria-label="${t.t}">
+        <label for="cb-${s.id}-${i}">${t.t}</label>
+        <span class="ptag ${t.p}" aria-label="Priority: ${t.p==='must'?'Must do':t.p==='imp'?'Important':'Revise'}">${t.p==='must'?'Must':t.p==='imp'?'Imp':'Rev'}</span>
+      </div>`;
+    }).join('');
+
+    const faqsHtml=s.faqs.map(f=>
+      `<div class="faq-item">
+        <span class="fq-tag ${f.f}" aria-label="Frequency: ${f.f==='every'?'Every paper':'Many papers'}">${f.f==='every'?'Every paper':'Many papers'}</span>
+        <p>${f.q}</p>
+      </div>`
+    ).join('');
+
+    card.innerHTML=
+      `<div class="subj-hdr" role="button" tabindex="0" aria-expanded="false" aria-controls="sb-${s.id}" id="sh-${s.id}" style="border-left-color:${s.color}">
+        <div class="subj-hdr-l">
+          <div class="subj-dot" style="background:${s.color}" aria-hidden="true"></div>
+          <span class="subj-n">${s.name}</span>
+          <span class="subj-badge">${s.code}</span>
+        </div>
+        <div class="subj-hdr-r">
+          <div class="prog-track" role="progressbar" id="spt-${s.id}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${s.name} topic completion progress">
+            <div class="prog-track-fill" id="spf-${s.id}" style="width:${pct}%;background:${s.color}"></div>
+          </div>
+          <span class="subj-pct" id="spl-${s.id}">${chk}/${tot}</span>
+          <div class="toggle-icon" aria-hidden="true">+</div>
+        </div>
+      </div>
+      <div class="subj-body" id="sb-${s.id}" role="region" aria-labelledby="sh-${s.id}">
+        ${s.note?`<p class="subj-note" style="color:${s.color}">${s.note}</p>`:''}
+        <div class="body-grid">
+          <div>
+            <p class="col-title" style="color:${s.color}">Topics checklist</p>
+            <div role="list" id="cl-${s.id}">${topicsHtml}</div>
+          </div>
+          <div>
+            <p class="col-title" style="color:${s.color}">Frequently asked questions (PYQ analysis)</p>
+            <div>${faqsHtml}</div>
+          </div>
+        </div>
+      </div>`;
+
+    c.appendChild(card);
+
+    const hdr=card.querySelector('.subj-hdr');
+    const toggle=()=>{
+      const open=card.classList.toggle('open');
+      hdr.setAttribute('aria-expanded',open);
+    };
+    hdr.addEventListener('click',toggle);
+    hdr.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+
+    s.topics.forEach((_,i)=>{
+      const cb=document.getElementById('cb-'+s.id+'-'+i);
+      cb.addEventListener('change',()=>{
+        setChk(s.id,i,cb.checked);
+        cb.closest('.topic-item').classList.toggle('done',cb.checked);
+        updateSubjProg(s.id);
+        updateOverall();
+      });
+    });
+  });
+}
+
+/* ================================================================
+   RENDER PLANNER
+================================================================ */
+function renderPlanner(){
+  const tb=document.getElementById('planBody');
+  PLAN.forEach(r=>{
+    const tr=document.createElement('tr');
+    if(r.ph){
+      tr.className='phase-r';
+      tr.innerHTML=`<td colspan="5">${r.ph}</td>`;
+    } else if(r.ex){
+      tr.className='exam-r';
+      tr.innerHTML=`<td colspan="5" style="background:${r.col}22;border-left:5px solid ${r.col}">
+        <span style="color:${r.col};font-weight:900">⬛ ${r.d}</span>
+        &nbsp;&nbsp;${r.lb} &nbsp;·&nbsp; 2:00 PM – 5:00 PM
+      </td>`;
+    } else {
+      const tags=(r.tags||[]).map(t=>`<span class="tag tag-${t.c}">${t.t}</span>`).join('');
+      tr.innerHTML=`
+        <td class="day-c">${r.d}</td>
+        <td>${r.dy}</td>
+        <td>${tags}<br><span style="font-size:.78rem;opacity:.8">${r.pri||''}</span></td>
+        <td><span style="font-size:.78rem;opacity:.8">${r.sec||'—'}</span></td>
+        <td><span style="font-size:.77rem;opacity:.75;line-height:1.5">${r.kp||''}</span></td>`;
+    }
+    tb.appendChild(tr);
+  });
+}
+
+/* ================================================================
+   COUNTDOWN TIMERS
+================================================================ */
+const pad=n=>String(n).padStart(2,'0');
+function countdown(target){
+  const diff=target-new Date();
+  if(diff<=0) return null;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  return `${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+function tickTimers(){
+  const ciaTs=[
+    new Date(2026,3,27,10,0,0),
+    new Date(2026,3,28,10,0,0),
+    new Date(2026,3,29,10,0,0)
+  ];
+  ['cia1','cia2','cia3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const v=countdown(ciaTs[i]);
+    if(v){el.textContent=v;el.className='cia-cd';}
+    else{el.textContent='Exam day!';el.className='cia-expired';}
+  });
+  SUBJECTS.forEach(s=>{
+    const el=document.getElementById('t-'+s.id);
+    if(!el) return;
+    const v=countdown(s.examDate);
+    el.textContent=v||'Exam day!';
+  });
+}
+
+/* ================================================================
+   RESET
+================================================================ */
+document.getElementById('btnReset').addEventListener('click',()=>{
+  if(!confirm('Reset all progress? This will uncheck every topic and cannot be undone.')) return;
+  SUBJECTS.forEach(s=>{
+    s.topics.forEach((_,i)=>{
+      localStorage.removeItem(KEY(s.id,i));
+      const cb=document.getElementById('cb-'+s.id+'-'+i);
+      if(cb){ cb.checked=false; cb.closest('.topic-item').classList.remove('done'); }
+    });
+    updateSubjProg(s.id);
+  });
+  updateOverall();
+});
+
+/* ================================================================
+   INIT
+================================================================ */
+renderExamCards();
+renderSubjCards();
+renderPlanner();
+SUBJECTS.forEach(s=>updateSubjProg(s.id));
+updateOverall();
+tickTimers();
+setInterval(tickTimers,1000);
+</script>
+</body>
+</html>
